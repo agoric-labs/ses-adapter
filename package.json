@@ -1,0 +1,30 @@
+{
+  "name": "ses-adapter",
+  "version": "0.0.1",
+  "description": "access harden/Compartment/HandledPromise inside or outside of SES",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "engines": {
+    "node": ">=10.15.1"
+  },
+  "scripts": {
+    "test": "tap --no-esm --no-coverage --reporter specy test/**/test*.js",
+    "build": "exit 0",
+    "lint-fix": "eslint --fix '**/*.js'",
+    "lint-check": "eslint '**/*.js'"
+  },
+  "devDependencies": {
+    "ses": "^0.7.3",
+    "tap": "^14.10.5",
+    "tape": "^4.10.0",
+    "tape-promise": "^4.0.0"
+  },
+  "dependencies": {
+  },
+  "author": "Agoric",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Agoric/agoric-sdk/issues"
+  },
+  "homepage": "https://github.com/Agoric/agoric-sdk/packages/ses-adapter"
+}
