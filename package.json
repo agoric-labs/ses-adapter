@@ -8,18 +8,20 @@
     "node": ">=10.15.1"
   },
   "scripts": {
-    "test": "tap --no-esm --no-coverage --reporter specy test/**/test*.js",
+    "test": "tap --no-coverage --reporter specy test/**/test*.js",
     "build": "exit 0",
     "lint-fix": "eslint --fix '**/*.js'",
     "lint-check": "eslint '**/*.js'"
   },
   "devDependencies": {
-    "ses": "^0.7.3",
     "tap": "^14.10.5",
     "tape": "^4.10.0",
     "tape-promise": "^4.0.0"
   },
   "dependencies": {
+    "ses": "^0.7.3",
+    "@agoric/harden": "^0.0.4",
+    "@agoric/eventual-send": "^0.5.0"
   },
   "author": "Agoric",
   "license": "Apache-2.0",

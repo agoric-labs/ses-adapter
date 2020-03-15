@@ -1,6 +1,6 @@
 /* global globalThis harden Compartment HandledPromise */
 import maybeHarden from '@agoric/harden';
-import { Compartment as maybeCompartment } from 'ses'; // 'compartment-shim';
+//import { Compartment as maybeCompartment } from 'ses'; // 'compartment-shim';
 import { HandledPromise as maybeHandledPromise } from '@agoric/eventual-send';
 
 // magic to obtain 'globalThis'
@@ -20,6 +20,7 @@ if (installed.harden) {
    installed.harden = newHarden;
 }
 
+/*
 let newCompartment;
 if (installed.Compartment) {
    newCompartment = installed.Compartment;
@@ -30,6 +31,7 @@ if (installed.Compartment) {
    newCompartment = maybeCompartment;
    installed.Compartment = newCompartment;
 }
+*/
 
 let newHandledPromise;
 if (installed.HandledPromise) {
@@ -51,6 +53,6 @@ try {
 }
 
 export { newHarden as harden,
-         newCompartment as Compartment,
+         //newCompartment as Compartment,
          newHandledPromise as HandledPromise,
        };
