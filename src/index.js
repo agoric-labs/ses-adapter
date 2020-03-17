@@ -1,6 +1,14 @@
 /* global globalThis harden Compartment HandledPromise */
-import maybeHarden from '@agoric/harden';
+
+// @agoric/harden-0.0.4 can't be imported under SES
+//import maybeHarden from '@agoric/harden';
+
+// ses-0.7.3 doesn't export Compartment, and when I patched it to do so
+// (https://github.com/Agoric/SES-shim/pull/225), `new Compartment` throws a
+// safety-check error
 //import { Compartment as maybeCompartment } from 'ses'; // 'compartment-shim';
+
+// HandledPromise might be ok though
 import { HandledPromise as maybeHandledPromise } from '@agoric/eventual-send';
 
 // magic to obtain 'globalThis'
@@ -11,37 +19,37 @@ const installed = globalThis.__SESAdapterInstalled || {};
 
 let newHarden;
 if (installed.harden) {
-   newHarden = installed.harden;
+  newHarden = installed.harden;
 } else if (typeof harden !== 'undefined') {
-   newHarden = harden;
-   installed.harden = harden;
+  newHarden = harden;
+  installed.harden = harden;
 } else {
-   newHarden = maybeHarden;
-   installed.harden = newHarden;
+  const maybeHarden = obj => obj; // TODO
+  newHarden = maybeHarden;
+  installed.harden = newHarden;
 }
 
-/*
 let newCompartment;
 if (installed.Compartment) {
-   newCompartment = installed.Compartment;
+  newCompartment = installed.Compartment;
 } else if (typeof Compartment !== 'undefined') {
-   newCompartment = Compartment;
-   installed.Compartment = Compartment;
+  newCompartment = Compartment;
+  installed.Compartment = Compartment;
 } else {
-   newCompartment = maybeCompartment;
-   installed.Compartment = newCompartment;
+  const maybeCompartment = () => { throw Error('non-SES Compartment still broken'); };
+  newCompartment = maybeCompartment;
+  installed.Compartment = newCompartment;
 }
-*/
 
 let newHandledPromise;
 if (installed.HandledPromise) {
-   newHandledPromise = installed.HandledPromise;
+  newHandledPromise = installed.HandledPromise;
 } else if (typeof HandledPromise !== 'undefined') {
-   newHandledPromise = HandledPromise;
-   installed.HandledPromise = HandledPromise;
+  newHandledPromise = HandledPromise;
+  installed.HandledPromise = HandledPromise;
 } else {
-   newHandledPromise = maybeHandledPromise;
-   installed.HandledPromise = newHandledPromise;
+  newHandledPromise = maybeHandledPromise;
+  installed.HandledPromise = newHandledPromise;
 }
 
 try {
@@ -53,6 +61,6 @@ try {
 }
 
 export { newHarden as harden,
-         //newCompartment as Compartment,
+         newCompartment as Compartment,
          newHandledPromise as HandledPromise,
        };

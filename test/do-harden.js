@@ -11,5 +11,5 @@ export function test_harden() {
   tap.ok(o === o2);
   tap.throws(() => {
     o.d = 'forbidden';
-  }, "fooerror");
+  }, 'not hardened');
 }
