@@ -1,14 +1,15 @@
 /* global globalThis harden Compartment HandledPromise */
 
-// @agoric/harden-0.0.4 can't be imported under SES
-//import maybeHarden from '@agoric/harden';
+// @agoric/harden-0.0.4 can only be imported under SES if noTameRegExp is
+// enabled
+import maybeHarden from '@agoric/harden';
 
 // ses-0.7.3 doesn't export Compartment, and when I patched it to do so
 // (https://github.com/Agoric/SES-shim/pull/225), `new Compartment` throws a
 // safety-check error
 //import { Compartment as maybeCompartment } from 'ses'; // 'compartment-shim';
 
-// HandledPromise might be ok though
+// @agoric/eventual-send-0.5.0 imports harden-0.0.4, requires noTameRegExp
 import { HandledPromise as maybeHandledPromise } from '@agoric/eventual-send';
 
 // magic to obtain 'globalThis'
@@ -24,7 +25,6 @@ if (installed.harden) {
   newHarden = harden;
   installed.harden = harden;
 } else {
-  const maybeHarden = obj => obj; // TODO
   newHarden = maybeHarden;
   installed.harden = newHarden;
 }
@@ -36,7 +36,7 @@ if (installed.Compartment) {
   newCompartment = Compartment;
   installed.Compartment = Compartment;
 } else {
-  const maybeCompartment = () => { throw Error('non-SES Compartment still broken'); };
+  const maybeCompartment = () => { throw Error('non-SES Compartment still broken'); }; // TODO
   newCompartment = maybeCompartment;
   installed.Compartment = newCompartment;
 }
